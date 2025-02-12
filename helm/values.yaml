@@ -1,0 +1,37 @@
+image: mslga/scully  # The container image to be used for daemonset
+tag: 1.0.0  # The tag/version of the container image
+imagePullPolicy: Always  # Specifies when to pull the image (Always, IfNotPresent, Never)
+
+env:
+  DISK_MAX_SIZE_GB: 100  # Maximum allowed disk size in GB
+  DISK_CHECK_DELAY: 60  # Interval (in seconds) between disk usage checks
+  DISK_USAGE_THRESHOLD: 85  # Disk usage percentage threshold before triggering an increase
+  DISK_INCREASE_PERCENTAGE: 10  # Percentage by which the disk should be increased
+  DISK_BLACKLIST_CONFIGMAP: ""  # ConfigMap containing a list of blacklisted disks
+  DISK_BLACKLIST_NAMESPACE: ""  # Namespace where the disk blacklist ConfigMap is located
+  DISK_MAX_SIZE_CONFIGMAP: ""  # ConfigMap defining maximum allowed disk sizes per namespace
+  DISK_MAX_SIZE_NAMESPACE: ""  # Namespace where the disk max size ConfigMap is located
+
+# This will be the content of the ConfigMap specified in DISK_BLACKLIST_CONFIGMAP
+diskBlackList:
+  pv-black-list: |-  # List of persistent volumes (PVs) that should be ignored
+    pvc-adfed3a2-93f1-43dc-ab68-7271b0018243
+    pvc-a860d0cf-b257-403b-bf26-673ac4f44f86
+
+# This will be the content of the ConfigMap specified in DISK_MAX_SIZE_CONFIGMAP
+diskMaxSizeLimit:
+  namespace1: "8"  # Maximum disk size allowed for namespace1 (in GB)
+  namespace2: "30"  # Maximum disk size allowed for namespace2 (in GB)
+
+securityContext:
+  runAsUser: 1231  # The user ID under which the container runs
+
+tolerations: []
+  #  - key: "key"
+  #    operator: "Equal|Exists"
+  #    value: "value"
+  #    effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
+
+nodeSelector: {}
+  # Uncomment the following line to schedule pods only on Linux nodes
+  # kubernetes.io/os: linux

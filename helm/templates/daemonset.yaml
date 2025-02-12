@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: scully
+  labels:
+    app: scully
+    {{- include "labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: scully
+  template:
+    metadata:
+      labels:
+        app: scully
+    spec:
+      securityContext:
+        fsGroup: 0
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+      serviceAccountName: scully
+      {{- with .Values.tolerations }}
+      tolerations: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: scully
+          image: {{ .Values.image }}:{{ .Values.tag }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          env:
+            - name: POD_NAMESPACE
+              value: {{ .Release.Namespace }}
+          {{- with .env }}
+            {{- range $name, $value := . }}
+            {{- if not (empty $value) }}
+            - name: {{ $name | quote }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- end }}
+          {{- end }}
+          securityContext:
+            capabilities:
+              add:
+                - SYS_ADMIN
+          volumeMounts:
+            - name: root-mount
+              mountPath: /host/root
+              readOnly: true
+      volumes:
+        - name: root-mount
+          hostPath:
+            path: /

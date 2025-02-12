@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pv-blacklist
+  labels:
+    app: scully
+    {{- include "labels" . | nindent 4 }}
+data:
+{{- with .Values.diskBlackList }}
+{{ toYaml . | indent 2 }}
+{{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pv-max-size
+  labels:
+    app: scully
+    {{- include "labels" . | nindent 4 }}
+data:
+{{- with .Values.diskMaxSizeLimit }}
+{{ toYaml . | indent 2 }}
+{{- end }}

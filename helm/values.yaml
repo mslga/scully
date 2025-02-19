@@ -19,9 +19,9 @@ diskBlackList:
     pvc-a860d0cf-b257-403b-bf26-673ac4f44f86
 
 # This will be the content of the ConfigMap specified in DISK_MAX_SIZE_CONFIGMAP
-diskMaxSizeLimit:
-  namespace1: "8"  # Maximum disk size allowed for namespace1 (in GB)
-  namespace2: "30"  # Maximum disk size allowed for namespace2 (in GB)
+diskMaxSizeLimit: {}
+  # namespace1: "8"  # Maximum disk size allowed for namespace1 (in GB)
+  # namespace2: "30"  # Maximum disk size allowed for namespace2 (in GB)
 
 securityContext:
   runAsUser: 1231  # The user ID under which the container runs

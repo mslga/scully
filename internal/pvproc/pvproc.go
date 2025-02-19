@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"scully/internal/k8s"
+	"scully/internal/metrics"
 	"scully/internal/utils"
 	"scully/internal/vars"
-	"scully/pkg/k8s"
-	"scully/pkg/metrics"
 	"time"
 
 	v1 "k8s.io/api/core/v1"

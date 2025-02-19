@@ -4,11 +4,11 @@ import (
 	"log"
 	"time"
 
+	"scully/internal/k8s"
+	"scully/internal/metrics"
 	"scully/internal/pvproc"
 	"scully/internal/utils"
 	"scully/internal/vars"
-	"scully/pkg/k8s"
-	"scully/pkg/metrics"
 )
 
 func main() {

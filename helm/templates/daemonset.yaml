@@ -31,7 +31,7 @@ spec:
           env:
             - name: POD_NAMESPACE
               value: {{ .Release.Namespace }}
-          {{- with .env }}
+          {{- with .Values.env }}
             {{- range $name, $value := . }}
             {{- if not (empty $value) }}
             - name: {{ $name | quote }}

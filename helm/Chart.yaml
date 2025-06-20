@@ -3,7 +3,7 @@ apiVersion: v1
 appVersion: "v1.0.0"
 description: Dynamically pv resizer
 name: scully
-version: 1.0.0
+version: 1.0.2
 home: https://github.com/mslga/scully
 maintainers:
 - email: idabimash@gmail.com

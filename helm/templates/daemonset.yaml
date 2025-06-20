@@ -13,6 +13,10 @@ spec:
     metadata:
       labels:
         app: scully
+      annotations:
+        checksum/env: {{ include "env-checksum" . | sha256sum | default "none" }}
+        checksum/configmap-pv-blacklist: {{ include "configmap-pv-blacklist-checksum" . | sha256sum | default "none" }}
+        checksum/configmap-pv-max-size: {{ include "configmap-pv-max-size-checksum" . | sha256sum | default "none" }}
     spec:
       securityContext:
         fsGroup: 0

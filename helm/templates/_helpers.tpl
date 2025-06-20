@@ -18,3 +18,22 @@ chart: {{ template "chart.chart" . }}
 heritage: {{ .Release.Service }}
 release: {{ .Release.Name }}
 {{- end -}}
+
+{{/*
+Define checksums for configmaps and envs.
+*/}}
+{{- define "configmap-pv-blacklist-checksum" }}
+{{- with .Values.diskBlackList }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
+
+{{- define "configmap-pv-max-size-checksum" }}
+{{- with .Values.diskMaxSizeLimit }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
+
+{{- define "env-checksum" }}
+{{- toYaml .Values.env | sha256sum }}
+{{- end }}
